@@ -4,80 +4,47 @@ import 'package:plantbuddy/screens/homepage.dart';
 import 'package:plantbuddy/screens/article_page.dart';
 import 'package:plantbuddy/screens/profile.dart';
 import 'package:plantbuddy/screens/kebunku/jadwal.dart';
-import 'package:plantbuddy/screens/kebunku/tambah_kebun.dart';
+import 'package:plantbuddy/screens/kebunku/kebunku.dart';
 
-// Helper function
-Widget _circleIcon({
-  required IconData icon,
-  required Color iconColor,
-  required Color borderColor,
-  bool rotateUp = false, // param baru
-}) {
-  Widget childIcon = Icon(icon, color: iconColor, size: 30);
-
-  // Jika rotateUp true, rotasi icon 270 derajat (menghadap ke atas)
-  if (rotateUp) {
-    childIcon = Transform.rotate(
-      angle: -90 * 3.1415926535 / 180, // -90 derajat (radian)
-      child: childIcon,
-    );
-  }
-
-  return Container(
-    width: 55,
-    height: 55,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      border: Border.all(color: borderColor, width: 3),
-    ),
-    child: Center(child: childIcon),
-  );
-}
-
-class Kebunku extends StatefulWidget {
-  const Kebunku({super.key});
+class TambahKebun extends StatefulWidget {
+  const TambahKebun({super.key});
 
   @override
-  State<Kebunku> createState() => _KebunkuState();
+  State<TambahKebun> createState() => _TambahKebunState();
 }
 
-class _KebunkuState extends State<Kebunku> with SingleTickerProviderStateMixin {
+class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   bool isAnimating = false;
+  bool isKebunkuSelected = false;
   bool isJadwalSelected = false;
-  bool isTambahSelected = false;
 
-  @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    _animation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOutCubic),
+    );
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        if (isJadwalSelected) {
+        if (isKebunkuSelected) {
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
-              pageBuilder:
-                  (context, animation, secondaryAnimation) => const Jadwal(),
+              pageBuilder: (context, animation, secondaryAnimation) => const Kebunku(),
               transitionDuration: Duration.zero,
               reverseTransitionDuration: Duration.zero,
             ),
           );
-        } else if (isTambahSelected) {
+        } else if (isJadwalSelected) {
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
-              pageBuilder:
-                  (context, animation, secondaryAnimation) =>
-                      const TambahKebun(),
+              pageBuilder: (context, animation, secondaryAnimation) => const Jadwal(),
               transitionDuration: Duration.zero,
               reverseTransitionDuration: Duration.zero,
             ),
@@ -98,24 +65,19 @@ class _KebunkuState extends State<Kebunku> with SingleTickerProviderStateMixin {
     setState(() {
       isAnimating = true;
       isJadwalSelected = true;
-      isTambahSelected = false;
+      isKebunkuSelected = false;
     });
-    _controller.forward();
-  }
-
-  void onTambahTap() {
-    if (isAnimating) return;
-    setState(() {
-      isAnimating = true;
-      isTambahSelected = true;
-      isJadwalSelected = false;
-    });
-    _controller.forward();
+    _controller.forward(from: 0);
   }
 
   void onKebunkuTap() {
     if (isAnimating) return;
-    // Already on Kebunku, no action needed
+    setState(() {
+      isAnimating = true;
+      isKebunkuSelected = true;
+      isJadwalSelected = false;
+    });
+    _controller.forward(from: 0);
   }
 
   @override
@@ -136,9 +98,10 @@ class _KebunkuState extends State<Kebunku> with SingleTickerProviderStateMixin {
               height: 32,
               child: Stack(
                 children: [
-                  // KebunKu kiri
+                  
+                  // TambahKebun kiri
                   Positioned(
-                    left: 35,
+                    left: 18,
                     top: 0,
                     child: GestureDetector(
                       onTap: onKebunkuTap,
@@ -146,8 +109,9 @@ class _KebunkuState extends State<Kebunku> with SingleTickerProviderStateMixin {
                         width: 98,
                         child: Text(
                           'KebunKu',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.black,
+                            color: isKebunkuSelected ? Colors.black : Colors.black.withOpacity(0.5),
                             fontSize: 17,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -158,7 +122,7 @@ class _KebunkuState extends State<Kebunku> with SingleTickerProviderStateMixin {
                       ),
                     ),
                   ),
-
+                  
                   // Jadwal tengah
                   Positioned(
                     left: screenWidth / 2 - 40,
@@ -171,10 +135,7 @@ class _KebunkuState extends State<Kebunku> with SingleTickerProviderStateMixin {
                           'Jadwal',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color:
-                                isJadwalSelected
-                                    ? Colors.black
-                                    : Colors.black.withOpacity(0.5),
+                            color: isJadwalSelected ? Colors.black : Colors.black.withOpacity(0.5),
                             fontSize: 17,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -190,24 +151,18 @@ class _KebunkuState extends State<Kebunku> with SingleTickerProviderStateMixin {
                   Positioned(
                     left: screenWidth - 135,
                     top: 0,
-                    child: GestureDetector(
-                      onTap: onTambahTap,
-                      child: SizedBox(
-                        width: 98,
-                        child: Text(
-                          'Tambah',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            color:
-                                isTambahSelected
-                                    ? Colors.black
-                                    : Colors.black.withOpacity(0.5),
-                            fontSize: 17,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w500,
-                            height: 1,
-                            letterSpacing: -0.50,
-                          ),
+                    child: SizedBox(
+                      width: 98,
+                      child: Text(
+                        'Tambah',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                          height: 1,
+                          letterSpacing: -0.50,
                         ),
                       ),
                     ),
@@ -226,17 +181,21 @@ class _KebunkuState extends State<Kebunku> with SingleTickerProviderStateMixin {
                   AnimatedBuilder(
                     animation: _animation,
                     builder: (context, child) {
-                      double leftPosition = 0;
-                      if (isJadwalSelected) {
-                        leftPosition = indicatorWidth;
-                      } else if (isTambahSelected) {
-                        leftPosition = indicatorWidth * 2;
-                      } else {
-                        leftPosition = 0;
+                      double screenWidth = MediaQuery.of(context).size.width;
+                      double indicatorWidth = screenWidth * 0.33;
+                      double startLeft = screenWidth - indicatorWidth;
+                      double endLeft = screenWidth / 2 - indicatorWidth / 2;
+                      if (isKebunkuSelected) {
+                        startLeft = screenWidth - indicatorWidth;
+                        endLeft = 0;
+                      } else if (isJadwalSelected) {
+                        startLeft = screenWidth - indicatorWidth;
+                        endLeft = screenWidth / 2 - indicatorWidth / 2;
                       }
+                      double leftPosition = startLeft - (startLeft - endLeft) * _animation.value;
                       return Positioned(
                         bottom: 0,
-                        left: leftPosition * _animation.value,
+                        left: leftPosition,
                         width: indicatorWidth,
                         child: Container(height: 1, color: Colors.black),
                       );
@@ -244,144 +203,6 @@ class _KebunkuState extends State<Kebunku> with SingleTickerProviderStateMixin {
                   ),
                 ],
               ),
-            ),
-          ),
-
-          // MAIN icon
-          Align(
-            alignment: Alignment(
-              0,
-              -0.1,
-            ), // center horizontal, sedikit lebih ke atas (atur sesuai selera)
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // ICON UTAMA (Tetap!)
-                Container(
-                  width: 160,
-                  height: 160, // PERSEGI
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(28),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned(
-                        left: 20,
-                        top: 26,
-                        child: _circleIcon(
-                          icon: Icons.water_drop,
-                          iconColor: Colors.blue[600]!,
-                          borderColor: Colors.blue[100]!,
-                        ),
-                      ),
-                      Positioned(
-                        right: 20,
-                        top: 26,
-                        child: _circleIcon(
-                          icon: Icons.content_cut,
-                          iconColor: Colors.green[600]!,
-                          borderColor: Colors.green[100]!,
-                          rotateUp: true,
-                        ),
-                      ),
-                      Positioned(
-                        left: 55, // (160-50)/2, 50 = width icon
-                        bottom: 24,
-                        child: _circleIcon(
-                          icon: Icons.wb_sunny,
-                          iconColor: Colors.orange[700]!,
-                          borderColor: Colors.orange[100]!,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20), // Jarak icon ke text
-                // Text utama
-                Text(
-                  'Tanamanmu Kosong',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 28,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w700,
-                    height: 1.2,
-                    letterSpacing: 0,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                // Text deskripsi
-                Text(
-                  'Kelola tanaman dengan mudah, dan\npantau pertumbuhannya.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black.withOpacity(0.55),
-                    fontSize: 19,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w500,
-                    height: 1.3,
-                    letterSpacing: 0,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                // Tombol
-                SizedBox(
-                  width: 180,
-                  height: 60,
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.black.withOpacity(0.7),
-                      side: BorderSide(
-                        width: 1.5,
-                        color: Colors.black.withOpacity(0.7),
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      backgroundColor: Colors.white,
-                      textStyle: const TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 17,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) => const TambahKebun(),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                            var curve = CurvedAnimation(parent: animation, curve: Curves.easeInOut);
-                            var fadeAnim = Tween(begin: 0.0, end: 1.0).animate(curve);
-                            var slideAnim = Tween(begin: const Offset(0.0, 0.1), end: const Offset(0.0, 0.0)).animate(curve);
-                            return FadeTransition(
-                              opacity: fadeAnim,
-                              child: SlideTransition(
-                                position: slideAnim,
-                                child: child,
-                              ),
-                            );
-                          },
-                          transitionDuration: const Duration(milliseconds: 400),
-                        ),
-                      );
-                    },
-                    child: const Text('Tambah Tanaman'),
-                  ),
-                ),
-              ],
             ),
           ),
 
