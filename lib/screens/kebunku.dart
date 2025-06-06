@@ -4,68 +4,56 @@ import 'package:plantbuddy/screens/homepage.dart';
 import 'package:plantbuddy/screens/article_page.dart';
 import 'package:plantbuddy/screens/profile.dart';
 
+// Helper function
+Widget _circleIcon({
+  required IconData icon,
+  required Color iconColor,
+  required Color borderColor,
+  bool rotateUp = false, // param baru
+}) {
+  Widget childIcon = Icon(icon, color: iconColor, size: 30);
+
+  // Jika rotateUp true, rotasi icon 270 derajat (menghadap ke atas)
+  if (rotateUp) {
+    childIcon = Transform.rotate(
+      angle: -90 * 3.1415926535 / 180, // -90 derajat (radian)
+      child: childIcon,
+    );
+  }
+
+  return Container(
+    width: 55,
+    height: 55,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      border: Border.all(color: borderColor, width: 3),
+    ),
+    child: Center(child: childIcon),
+  );
+}
+
 class Kebunku extends StatelessWidget {
+  const Kebunku({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // Konten utama di dalam Stack
+          // Appbar custom
           Positioned(
-            top: 80, // Atur posisi vertikal lebih ke atas jika perlu
+            top: 80,
             left: 0,
-            right: 0,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 852,  // Menyesuaikan tinggi konten
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(color: const Color(0xFFF8F8F8)),
+              height: 32,
               child: Stack(
                 children: [
-                  // Text "Tanamanmu Kosong"
-                  Positioned(
-                    left: 59,
-                    top: 464,
-                    child: SizedBox(
-                      width: 276,
-                      child: Text(
-                        'Tanamanmu Kosong',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 23,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w500,
-                          height: 0.74,
-                          letterSpacing: -0.50,
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Deskripsi tambahan
+                  // KebunKu kiri
                   Positioned(
                     left: 25,
-                    top: 497,
-                    child: SizedBox(
-                      width: 343,
-                      child: Text(
-                        'Kelola tanaman dengan mudah, dan \npantau pertumbuhannya.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
-                          fontSize: 17,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w500,
-                          height: 1,
-                          letterSpacing: -0.50,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 25,
-                    top: 65,
+                    top: 0,
                     child: SizedBox(
                       width: 98,
                       child: Text(
@@ -81,9 +69,10 @@ class Kebunku extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Jadwal tengah
                   Positioned(
-                    left: 148,
-                    top: 65,
+                    left: MediaQuery.of(context).size.width / 2 - 49,
+                    top: 0,
                     child: SizedBox(
                       width: 98,
                       child: Text(
@@ -100,9 +89,10 @@ class Kebunku extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Tambah kanan
                   Positioned(
-                    left: 270,
-                    top: 65,
+                    left: MediaQuery.of(context).size.width - 123,
+                    top: 0,
                     child: SizedBox(
                       width: 98,
                       child: Text(
@@ -119,57 +109,143 @@ class Kebunku extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Button "Tambah Tanaman"
+                  // Garis bawah abu
                   Positioned(
-                    left: 109,
-                    top: 568,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
                     child: Container(
-                      width: 175,
-                      height: 60,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
+                      height: 1,
+                      color: Colors.grey.withOpacity(0.5),
                     ),
                   ),
+                  // Garis bawah hitam (tab aktif)
                   Positioned(
-                    left: 121,
-                    top: 589,
-                    child: Text(
-                      'Tambah Tanaman',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.5),
-                        fontSize: 17,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
-                        height: 1,
-                        letterSpacing: -0.50,
-                      ),
-                    ),
+                    bottom: 0,
+                    left: 0,
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    child: Container(height: 1, color: Colors.black),
                   ),
-                  // Ikon dengan rotasi
-                  _buildRotatedBox(Icons.water_drop, Colors.blue, 0.23, 29.55, 4.08, 235.90, 323.81),
-                  _buildRotatedBox(Icons.cut, Colors.green, 0.23, 29.55, 4.08, 232.84, 334),
-                  _buildRotatedBox(Icons.wb_sunny, Colors.yellow, 0.23, 29.55, 4.08, 229.78, 344.19),
-                  // Ganti Icons.leaf dengan Icons.local_florist
-                  _buildRotatedBox(Icons.local_florist, Colors.green, -0.23, 44.81, 20.91, 97.24, 345.12),
-                  _buildRotatedBox(Icons.local_florist, Colors.green, -0.23, 16.22, 16.22, 111.95, 344.35),
-                  // Kotak lingkaran dengan ikon lainnya
-                  _buildCircleIcon(29.55, Colors.white, 158.57, 300.38),
-                  _buildCircleIcon(29.55, Colors.white, 201.36, 300.38),
-                  _buildCircleIcon(16.30, Colors.white, 208.49, 307.51),
-                  _buildCircleIcon(29.55, Colors.white, 178.94, 338.07),
-                  _buildCircleIcon(16.30, Colors.white, 186.07, 345.21),
-                  _buildCircleIcon(35.81, Colors.white, 271.61, 325.85),
-                  _buildCircleIcon(24.45, Colors.white, 276.14, 335.02),
                 ],
               ),
             ),
           ),
+
+          // MAIN icon
+          Align(
+      alignment: Alignment(0, -0.1), // center horizontal, sedikit lebih ke atas (atur sesuai selera)
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // ICON UTAMA (Tetap!)
+          Container(
+            width: 160,
+            height: 160, // PERSEGI
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(28),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  left: 20,
+                  top: 26,
+                  child: _circleIcon(
+                    icon: Icons.water_drop,
+                    iconColor: Colors.blue[600]!,
+                    borderColor: Colors.blue[100]!,
+                  ),
+                ),
+                Positioned(
+                  right: 20,
+                  top: 26,
+                  child: _circleIcon(
+                    icon: Icons.content_cut,
+                    iconColor: Colors.green[600]!,
+                    borderColor: Colors.green[100]!,
+                    rotateUp: true,
+                  ),
+                ),
+                Positioned(
+                  left: 55, // (160-50)/2, 50 = width icon
+                  bottom: 24,
+                  child: _circleIcon(
+                    icon: Icons.wb_sunny,
+                    iconColor: Colors.orange[700]!,
+                    borderColor: Colors.orange[100]!,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20), // Jarak icon ke text
+          // Text utama
+          Text(
+            'Tanamanmu Kosong',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 28,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w700,
+              height: 1.2,
+              letterSpacing: 0,
+            ),
+          ),
+          const SizedBox(height: 10),
+          // Text deskripsi
+          Text(
+            'Kelola tanaman dengan mudah, dan\npantau pertumbuhannya.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black.withOpacity(0.55),
+              fontSize: 19,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w500,
+              height: 1.3,
+              letterSpacing: 0,
+            ),
+          ),
+          const SizedBox(height: 24),
+          // Tombol
+          SizedBox(
+            width: 180,
+            height: 60,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.black.withOpacity(0.7),
+                side: BorderSide(width: 1.5, color: Colors.black.withOpacity(0.7)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                backgroundColor: Colors.white,
+                textStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 17,
+                  letterSpacing: -0.5,
+                ),
+              ),
+              onPressed: () {
+                // TODO: aksi tambah tanaman
+                print('Tambah Tanaman ditekan!');
+              },
+              child: const Text('Tambah Tanaman'),
+            ),
+          ),
+        ],
+      ),
+    ),
+
 
           // Bottom Navigation Bar
           Positioned(
@@ -201,8 +277,9 @@ class Kebunku extends StatelessWidget {
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) =>
-                              HomePage(userName: ''),
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  HomePage(userName: ''),
                           transitionsBuilder: (
                             context,
                             animation,
@@ -279,8 +356,9 @@ class Kebunku extends StatelessWidget {
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) =>
-                              const ArticlePage(),
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const ArticlePage(),
                           transitionsBuilder: (
                             context,
                             animation,
@@ -337,8 +415,9 @@ class Kebunku extends StatelessWidget {
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) =>
-                              const ProfilePage(),
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const ProfilePage(),
                           transitionsBuilder: (
                             context,
                             animation,
@@ -395,52 +474,6 @@ class Kebunku extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  // Fungsi untuk membuat kotak yang diputar
-  Widget _buildRotatedBox(IconData icon, Color color, double angle, double width, double height, double left, double top) {
-    return Positioned(
-      left: left,
-      top: top,
-      child: Transform.rotate(
-        angle: angle, // Kemiringan kotak
-        child: Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            icon,
-            size: 40,
-            color: color,
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Fungsi untuk membuat lingkaran dengan ikon lainnya
-  Widget _buildCircleIcon(double size, Color color, double left, double top) {
-    return Positioned(
-      left: left,
-      top: top,
-      child: Container(
-        width: size,
-        height: size,
-        decoration: ShapeDecoration(
-          color: color,
-          shape: OvalBorder(
-            side: BorderSide(
-              width: 1,
-              strokeAlign: BorderSide.strokeAlignOutside,
-              color: Colors.black.withOpacity(0.13),
-            ),
-          ),
-        ),
       ),
     );
   }
