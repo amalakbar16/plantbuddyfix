@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:plantbuddy/auth/login.dart';
 import 'package:plantbuddy/screens/homepage.dart';
 import 'package:plantbuddy/screens/article_page.dart';
-import 'package:plantbuddy/screens/kebunku.dart';
+import 'package:plantbuddy/screens/kebunku/kebunku.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
