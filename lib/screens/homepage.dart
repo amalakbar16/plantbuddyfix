@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:plantbuddy/auth/login.dart';
 import 'package:plantbuddy/screens/article_page.dart';
 import 'package:plantbuddy/screens/profile.dart';
+import 'package:plantbuddy/screens/kebunku.dart';
 
 class HomePage extends StatelessWidget {
   final String userName;
@@ -65,116 +65,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Logout Button
-                      Positioned(
-                        right: 30,
-                        top: 96,
-                        child: GestureDetector(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text(
-                                    'Keluar',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  content: Text(
-                                    'Apakah Anda yakin ingin keluar?',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                    ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: Text(
-                                        'Batal',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontFamily: 'Montserrat',
-                                        ),
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder: (context, animation, secondaryAnimation) => const LoginPage(),
-                                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                              var curve = CurvedAnimation(
-                                                parent: animation,
-                                                curve: Curves.easeInOut,
-                                              );
-                                              var fadeAnim = Tween(begin: 0.0, end: 1.0).animate(curve);
-                                              var slideAnim = Tween(
-                                                begin: const Offset(0.0, 0.1),
-                                                end: const Offset(0.0, 0.0),
-                                              ).animate(curve);
-                                              return FadeTransition(
-                                                opacity: fadeAnim,
-                                                child: SlideTransition(
-                                                  position: slideAnim,
-                                                  child: child,
-                                                ),
-                                              );
-                                            },
-                                            transitionDuration: const Duration(milliseconds: 400),
-                                          ),
-                                          (route) => false,
-                                        );
-                                      },
-                                      child: Text(
-                                        'Ya, Keluar',
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontFamily: 'Montserrat',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(255, 0, 0, 0.1),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.logout,
-                                  color: Colors.red,
-                                  size: 18,
-                                ),
-                                SizedBox(width: 4),
-                                Text(
-                                  'Keluar',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
+                                          Positioned(
                         left: 30,
                         top: 134,
                         child: Text(
@@ -717,25 +608,54 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        CupertinoIcons.leaf_arrow_circlepath,
-                        color: const Color(0xFFD1D1D1),
-                        size: 24,
-                      ),
-                      Text(
-                        'Kebunku',
-                        style: TextStyle(
-                          color: const Color(0xFFD1D1D1),
-                          fontSize: 12,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                          height: 2.17,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) => Kebunku(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            var curve = CurvedAnimation(
+                              parent: animation,
+                              curve: Curves.easeInOut,
+                            );
+                            var fadeAnim = Tween(begin: 0.0, end: 1.0).animate(curve);
+                            var slideAnim = Tween(
+                              begin: const Offset(0.0, 0.1),
+                              end: const Offset(0.0, 0.0),
+                            ).animate(curve);
+                            return FadeTransition(
+                              opacity: fadeAnim,
+                              child: SlideTransition(
+                                position: slideAnim,
+                                child: child,
+                              ),
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 400),
                         ),
-                      ),
-                    ],
+                      );
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          CupertinoIcons.leaf_arrow_circlepath,
+                          color: const Color(0xFFD1D1D1),
+                          size: 24,
+                        ),
+                        Text(
+                          'Kebunku',
+                          style: TextStyle(
+                            color: const Color(0xFFD1D1D1),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600,
+                            height: 2.17,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {

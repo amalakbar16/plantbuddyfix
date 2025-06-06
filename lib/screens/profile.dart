@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:plantbuddy/auth/login.dart';
 import 'package:plantbuddy/screens/homepage.dart';
 import 'package:plantbuddy/screens/article_page.dart';
+import 'package:plantbuddy/screens/kebunku.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -432,37 +434,272 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   // Keluar
-                  Positioned(
-                    left: 27,
-                    top: 264,
-                    child: Icon(
-                      Icons.exit_to_app, // Keluar Icon
-                      color: Colors.red,
-                      size: 20,
-                    ),
+Positioned(
+  left: 27,
+  top: 264,
+  child: GestureDetector(
+    onTap: () {
+      // Menambahkan aksi untuk keluar
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Keluar',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            content: Text(
+              'Apakah Anda yakin ingin keluar?',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Batal',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontFamily: 'Montserrat',
                   ),
-                  Positioned(
-                    left: 54,
-                    top: 264,
-                    child: Text(
-                      'Keluar',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 15,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w500,
-                      ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => const LoginPage(),
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        var curve = CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeInOut,
+                        );
+                        var fadeAnim = Tween(begin: 0.0, end: 1.0).animate(curve);
+                        var slideAnim = Tween(
+                          begin: const Offset(0.0, 0.1),
+                          end: const Offset(0.0, 0.0),
+                        ).animate(curve);
+                        return FadeTransition(
+                          opacity: fadeAnim,
+                          child: SlideTransition(
+                            position: slideAnim,
+                            child: child,
+                          ),
+                        );
+                      },
+                      transitionDuration: const Duration(milliseconds: 400),
                     ),
+                    (route) => false,
+                  );
+                },
+                child: Text(
+                  'Ya, Keluar',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
                   ),
-                  Positioned(
-                    right: 16,
-                    top: 264,
-                    child: Icon(
-                      Icons.arrow_forward_ios, // Panah di kanan
-                      color: Colors.red,
-                      size: 16,
+                ),
+              ),
+            ],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          );
+        },
+      );
+    },
+    child: Icon(
+      Icons.exit_to_app, // Keluar Icon
+      color: Colors.red,
+      size: 20,
+    ),
+  ),
+),
+Positioned(
+  left: 54,
+  top: 264,
+  child: GestureDetector(
+    onTap: () {
+      // Menambahkan aksi untuk keluar
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Keluar',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            content: Text(
+              'Apakah Anda yakin ingin keluar?',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Batal',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => const LoginPage(),
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        var curve = CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeInOut,
+                        );
+                        var fadeAnim = Tween(begin: 0.0, end: 1.0).animate(curve);
+                        var slideAnim = Tween(
+                          begin: const Offset(0.0, 0.1),
+                          end: const Offset(0.0, 0.0),
+                        ).animate(curve);
+                        return FadeTransition(
+                          opacity: fadeAnim,
+                          child: SlideTransition(
+                            position: slideAnim,
+                            child: child,
+                          ),
+                        );
+                      },
+                      transitionDuration: const Duration(milliseconds: 400),
                     ),
+                    (route) => false,
+                  );
+                },
+                child: Text(
+                  'Ya, Keluar',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
                   ),
+                ),
+              ),
+            ],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          );
+        },
+      );
+    },
+    child: Text(
+      'Keluar',
+      style: TextStyle(
+        color: Colors.red,
+        fontSize: 15,
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  ),
+),
+Positioned(
+  right: 16,
+  top: 264,
+  child: GestureDetector(
+    onTap: () {
+      // Menambahkan aksi untuk keluar saat ikon panah ditekan
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Keluar',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            content: Text(
+              'Apakah Anda yakin ingin keluar?',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Batal',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => const LoginPage(),
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        var curve = CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeInOut,
+                        );
+                        var fadeAnim = Tween(begin: 0.0, end: 1.0).animate(curve);
+                        var slideAnim = Tween(
+                          begin: const Offset(0.0, 0.1),
+                          end: const Offset(0.0, 0.0),
+                        ).animate(curve);
+                        return FadeTransition(
+                          opacity: fadeAnim,
+                          child: SlideTransition(
+                            position: slideAnim,
+                            child: child,
+                          ),
+                        );
+                      },
+                      transitionDuration: const Duration(milliseconds: 400),
+                    ),
+                    (route) => false,
+                  );
+                },
+                child: Text(
+                  'Ya, Keluar',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          );
+        },
+      );
+    },
+    child: Icon(
+      Icons.arrow_forward_ios, // Panah di kanan
+      color: Colors.red,
+      size: 16,
+    ),
+  ),
+),
+
                   // Hapus Akun
                   Positioned(
                     left: 27,
@@ -584,25 +821,54 @@ class ProfilePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        CupertinoIcons.leaf_arrow_circlepath,
-                        color: const Color(0xFFD1D1D1),
-                        size: 24,
-                      ),
-                      Text(
-                        'Kebunku',
-                        style: TextStyle(
-                          color: const Color(0xFFD1D1D1),
-                          fontSize: 12,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                          height: 2.17,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) => Kebunku(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            var curve = CurvedAnimation(
+                              parent: animation,
+                              curve: Curves.easeInOut,
+                            );
+                            var fadeAnim = Tween(begin: 0.0, end: 1.0).animate(curve);
+                            var slideAnim = Tween(
+                              begin: const Offset(0.0, 0.1),
+                              end: const Offset(0.0, 0.0),
+                            ).animate(curve);
+                            return FadeTransition(
+                              opacity: fadeAnim,
+                              child: SlideTransition(
+                                position: slideAnim,
+                                child: child,
+                              ),
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 400),
                         ),
-                      ),
-                    ],
+                      );
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          CupertinoIcons.leaf_arrow_circlepath,
+                          color: const Color(0xFFD1D1D1),
+                          size: 24,
+                        ),
+                        Text(
+                          'Kebunku',
+                          style: TextStyle(
+                            color: const Color(0xFFD1D1D1),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600,
+                            height: 2.17,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {

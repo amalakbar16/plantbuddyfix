@@ -5,6 +5,7 @@ import 'package:plantbuddy/screens/homepage.dart';
 import 'package:plantbuddy/screens/detail_article.dart';
 import 'package:plantbuddy/services/api_service.dart';
 import 'package:plantbuddy/screens/profile.dart';
+import 'package:plantbuddy/screens/kebunku.dart';
 
 class ArticleCard extends StatelessWidget {
   final Map<String, dynamic> article;
@@ -464,25 +465,54 @@ class _ArticlePageState extends State<ArticlePage> {
                       ],
                     ),
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        CupertinoIcons.leaf_arrow_circlepath,
-                        color: Color(0xFFD1D1D1),
-                        size: 24,
-                      ),
-                      const Text(
-                        'Kebunku',
-                        style: TextStyle(
-                          color: Color(0xFFD1D1D1),
-                          fontSize: 12,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                          height: 2.17,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) => Kebunku(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            var curve = CurvedAnimation(
+                              parent: animation,
+                              curve: Curves.easeInOut,
+                            );
+                            var fadeAnim = Tween(begin: 0.0, end: 1.0).animate(curve);
+                            var slideAnim = Tween(
+                              begin: const Offset(0.0, 0.1),
+                              end: const Offset(0.0, 0.0),
+                            ).animate(curve);
+                            return FadeTransition(
+                              opacity: fadeAnim,
+                              child: SlideTransition(
+                                position: slideAnim,
+                                child: child,
+                              ),
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 400),
                         ),
-                      ),
-                    ],
+                      );
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(
+                          CupertinoIcons.leaf_arrow_circlepath,
+                          color: Color(0xFFD1D1D1),
+                          size: 24,
+                        ),
+                        Text(
+                          'Kebunku',
+                          style: TextStyle(
+                            color: Color(0xFFD1D1D1),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600,
+                            height: 2.17,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
