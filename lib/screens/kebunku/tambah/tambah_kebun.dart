@@ -5,6 +5,7 @@ import 'package:plantbuddy/screens/article_page.dart';
 import 'package:plantbuddy/screens/profile.dart';
 import 'package:plantbuddy/screens/kebunku/jadwal/jadwal.dart';
 import 'package:plantbuddy/screens/kebunku/kebun/kebunku.dart';
+import 'package:plantbuddy/screens/kebunku/tambah/tambahkan.dart';
 
 class TambahKebun extends StatefulWidget {
   const TambahKebun({super.key});
@@ -13,7 +14,8 @@ class TambahKebun extends StatefulWidget {
   State<TambahKebun> createState() => _TambahKebunState();
 }
 
-class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStateMixin {
+class _TambahKebunState extends State<TambahKebun>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   bool isAnimating = false;
@@ -35,7 +37,8 @@ class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStat
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => const Kebunku(),
+              pageBuilder:
+                  (context, animation, secondaryAnimation) => const Kebunku(),
               transitionDuration: Duration.zero,
               reverseTransitionDuration: Duration.zero,
             ),
@@ -44,7 +47,8 @@ class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStat
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => const Jadwal(),
+              pageBuilder:
+                  (context, animation, secondaryAnimation) => const Jadwal(),
               transitionDuration: Duration.zero,
               reverseTransitionDuration: Duration.zero,
             ),
@@ -98,7 +102,6 @@ class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStat
               height: 32,
               child: Stack(
                 children: [
-                  
                   // TambahKebun kiri
                   Positioned(
                     left: 18,
@@ -111,7 +114,10 @@ class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStat
                           'KebunKu',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: isKebunkuSelected ? Colors.black : Colors.black.withOpacity(0.5),
+                            color:
+                                isKebunkuSelected
+                                    ? Colors.black
+                                    : Colors.black.withOpacity(0.5),
                             fontSize: 17,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -122,7 +128,7 @@ class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStat
                       ),
                     ),
                   ),
-                  
+
                   // Jadwal tengah
                   Positioned(
                     left: screenWidth / 2 - 40,
@@ -135,7 +141,10 @@ class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStat
                           'Jadwal',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: isJadwalSelected ? Colors.black : Colors.black.withOpacity(0.5),
+                            color:
+                                isJadwalSelected
+                                    ? Colors.black
+                                    : Colors.black.withOpacity(0.5),
                             fontSize: 17,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -192,7 +201,8 @@ class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStat
                         startLeft = screenWidth - indicatorWidth;
                         endLeft = screenWidth / 2 - indicatorWidth / 2;
                       }
-                      double leftPosition = startLeft - (startLeft - endLeft) * _animation.value;
+                      double leftPosition =
+                          startLeft - (startLeft - endLeft) * _animation.value;
                       return Positioned(
                         bottom: 0,
                         left: leftPosition,
@@ -205,6 +215,15 @@ class _TambahKebunState extends State<TambahKebun> with SingleTickerProviderStat
               ),
             ),
           ),
+
+Align(
+      alignment: Alignment.topCenter,
+      child: Padding(
+        padding: EdgeInsets.only(top: 0),
+        child: TambahkanWidget(),
+      ),
+    ),
+
 
           // Bottom Navigation Bar
           Positioned(

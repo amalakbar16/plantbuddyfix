@@ -7,7 +7,6 @@ import 'package:plantbuddy/screens/profile.dart';
 import 'package:plantbuddy/screens/kebunku/tambah/tambah_kebun.dart';
 import 'package:plantbuddy/screens/kebunku/jadwal/tanggal.dart';
 
-
 class Jadwal extends StatefulWidget {
   const Jadwal({super.key});
 
@@ -29,16 +28,18 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _animation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         if (isKebunkuSelected) {
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => const Kebunku(),
+              pageBuilder:
+                  (context, animation, secondaryAnimation) => const Kebunku(),
               transitionDuration: Duration.zero,
               reverseTransitionDuration: Duration.zero,
             ),
@@ -47,7 +48,9 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => const TambahKebun(),
+              pageBuilder:
+                  (context, animation, secondaryAnimation) =>
+                      const TambahKebun(),
               transitionDuration: Duration.zero,
               reverseTransitionDuration: Duration.zero,
             ),
@@ -93,7 +96,8 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
     final screenWidth = MediaQuery.of(context).size.width;
     final indicatorWidth = screenWidth * 0.33;
     final leftCenterPosition = (indicatorWidth - indicatorWidth * 0.33) / 2;
-    final rightCenterPosition = indicatorWidth + (indicatorWidth - indicatorWidth * 0.33) / 2;
+    final rightCenterPosition =
+        indicatorWidth + (indicatorWidth - indicatorWidth * 0.33) / 2;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -120,7 +124,10 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
                           'KebunKu',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: isKebunkuSelected ? Colors.black : Colors.black.withOpacity(0.5),
+                            color:
+                                isKebunkuSelected
+                                    ? Colors.black
+                                    : Colors.black.withOpacity(0.5),
                             fontSize: 17,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -136,20 +143,20 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
                     left: screenWidth / 2 - 40,
                     top: 0,
                     child: SizedBox(
-                        width: 98,
-                        child: Text(
-                          'Jadwal',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w500,
-                            height: 1,
-                            letterSpacing: -0.50,
-                          ),
+                      width: 98,
+                      child: Text(
+                        'Jadwal',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                          height: 1,
+                          letterSpacing: -0.50,
                         ),
                       ),
+                    ),
                   ),
                   // Tambah kanan
                   Positioned(
@@ -163,7 +170,10 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
                           'Tambah',
                           textAlign: TextAlign.right,
                           style: TextStyle(
-                            color: isTambahSelected ? Colors.black : Colors.black.withOpacity(0.5),
+                            color:
+                                isTambahSelected
+                                    ? Colors.black
+                                    : Colors.black.withOpacity(0.5),
                             fontSize: 17,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -194,7 +204,8 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
                         startLeft = screenWidth / 2 - 58;
                         endLeft = screenWidth - indicatorWidth;
                       }
-                      double leftPosition = startLeft - (startLeft - endLeft) * _animation.value;
+                      double leftPosition =
+                          startLeft - (startLeft - endLeft) * _animation.value;
                       return Positioned(
                         bottom: 0,
                         left: leftPosition,
@@ -208,13 +219,11 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
             ),
           ),
 
-// Tambahkan widget tanggal di bawah garis tab bar
-    Positioned(
-      top: 113, // 80 + 32 (tab bar) + 1 (garis)
-      child: Tanggal(),
-    ),
-
-
+          // Tambahkan widget tanggal di bawah garis tab bar
+          Positioned(
+            top: 113, // 80 + 32 (tab bar) + 1 (garis)
+            child: Tanggal(),
+          ),
 
           // Bottom Navigation Bar
           Positioned(
