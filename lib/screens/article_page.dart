@@ -5,7 +5,7 @@ import 'package:plantbuddy/screens/homepage.dart';
 import 'package:plantbuddy/screens/detail_article.dart';
 import 'package:plantbuddy/services/api_service.dart';
 import 'package:plantbuddy/screens/profile.dart';
-import 'package:plantbuddy/screens/kebunku/kebunku.dart';
+import 'package:plantbuddy/screens/kebunku/kebun/kebunku.dart';
 
 class ArticleCard extends StatelessWidget {
   final Map<String, dynamic> article;

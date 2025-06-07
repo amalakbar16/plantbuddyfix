@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:plantbuddy/screens/kebunku/kebunku.dart';
+import 'package:plantbuddy/screens/kebunku/kebun/kebunku.dart';
 import 'package:plantbuddy/screens/homepage.dart';
 import 'package:plantbuddy/screens/article_page.dart';
 import 'package:plantbuddy/screens/profile.dart';
-import 'package:plantbuddy/screens/kebunku/tambah_kebun.dart';
+import 'package:plantbuddy/screens/kebunku/tambah/tambah_kebun.dart';
+import 'package:plantbuddy/screens/kebunku/jadwal/tanggal.dart';
+
 
 class Jadwal extends StatefulWidget {
   const Jadwal({super.key});
@@ -24,7 +26,7 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _animation = Tween<double>(begin: 0, end: 1).animate(
@@ -205,6 +207,14 @@ class _JadwalState extends State<Jadwal> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
+
+// Tambahkan widget tanggal di bawah garis tab bar
+    Positioned(
+      top: 113, // 80 + 32 (tab bar) + 1 (garis)
+      child: Tanggal(),
+    ),
+
+
 
           // Bottom Navigation Bar
           Positioned(

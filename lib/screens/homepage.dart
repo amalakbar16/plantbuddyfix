@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:plantbuddy/screens/article_page.dart';
 import 'package:plantbuddy/screens/profile.dart';
-import 'package:plantbuddy/screens/kebunku/kebunku.dart';
+import 'package:plantbuddy/screens/kebunku/kebun/kebunku.dart';
 
 class HomePage extends StatelessWidget {
   final String userName;
